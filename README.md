@@ -3,9 +3,7 @@ The current repository contains all the scripts needed to reproduce the results 
 > Ali Hamraoui, Laurent Jourdren and Morgane Thomas-Chollier. AsaruSim: a single-cell and spatial RNA-Seq Nanopore long-reads simulation workflow.
 > bioRxiv 2024.09.20.613625; doi: [https://doi.org/10.1101/2024.09.20.613625](https://doi.org/10.1101/2024.09.20.613625)
 
-## Structure
-
-The repository is organized into three main directories, each pertaining to a different aspect of RNA-Seq simulation and analysis:
+This repository is organized into three main directories, each pertaining to a different aspect of simulation and analysis:
 
 ### 1. Sequence Identity Estimation
 
@@ -18,7 +16,7 @@ This directory contains scripts and notebooks for estimating sequence identity b
 
 ### 2. Read Length Distribution
 
-Tools and visualizations for estimating and comparing the read length distributions of simulated and real RNA-Seq reads.
+Tools and visualizations for estimating and comparing the read length distributions of simulated and real scRNA-Seq reads.
 
 - `lognorm.pdf` - PDF file showing the log-normal distribution fit of read lengths.
 - `read_length_estimation.html` - HTML output of the read length estimation Jupyter Notebook.
@@ -37,16 +35,14 @@ Analysis of gene expression differences between real and simulated datasets.
 - `UMAP_comparaison.html` - HTML output of the UMAP comparison.
 - `imports.R` - R script containing libraries necessary for the analysis.
 
+### 4. Datasets
+
+
 ## Getting Started
 
-To get started with AsaruSim, clone this repository and explore the notebooks and scripts provided. Each directory includes detailed notebooks and scripts necessary for performing specific types of analysis. Ensure you have the required dependencies installed, which can be identified in the respective scripts and notebooks.
+Clone this repository and explore the notebooks and scripts. Each directory includes notebooks and scripts necessary to reproduce the analysis. 
+Ensure you have the required dependencies installed, which can be identified in the respective scripts and notebooks.
 
 ## Requirements
 
-Make sure to install the necessary Python and R libraries before running the scripts. Dependencies include but are not limited to libraries like `numpy`, `matplotlib`, `seaborn` for Python, and `ggplot2`, `dplyr`, `cowplot` for R. You can install Python libraries via `pip` and R packages via `install.packages()`.
-
-## Contributing
-
-Contributions to AsaruSim are welcome! Please feel free to fork the repository, make your changes, and submit a pull request. If you have any questions or need further information, do not hesitate to raise an issue or contact the repository maintainers.
-
-Thank you for visiting the AsaruSim repository, and we look forward to your contributions and feedback to enhance this simulation workflow!
+Make sure to install the necessary Python and R libraries before running the scripts. Dependencies include but are not limited to libraries like `numpy`, `matplotlib`, `seaborn` for Python, and `ggplot2`, `dplyr`, for R. You can install Python libraries via `pip` and R packages via `install.packages()`.
