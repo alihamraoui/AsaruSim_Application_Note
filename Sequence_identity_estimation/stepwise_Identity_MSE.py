@@ -61,23 +61,23 @@ def run_subprocess(cmd):
     return str(stdout), str(stderr)
 
 
-def call_SLSim(SLSimPath, perfect_reads, tmp_fastq, params, adapters_fasta="adapter.fasta",  min_adapter_id=0.7):
+def call_AsaruSim(AsaruSimPath, perfect_reads, tmp_fastq, params, adapters_fasta="adapter.fasta",  min_adapter_id=0.7):
     """ """
     tmp_fasta = tmp_fastq.replace("fastq", "fasta")
-    SLSim_cmd = "python3 {SLSimPath}/bin/error_simulator.py --thread 31 \
+    AsaruSim_cmd = "python3 {AsaruSimPath}/bin/AsaruSim.py call_badread --thread 31 \
     -t  {perfect_reads} \
     -o  {tmp_fastq} \
     --badread-identity {mean},{var},{max} \
-    --badread-error-model  {SLSimPath}/badread/new_error_model \
-    --badread-qscore-model {SLSimPath}/badread/new_qscore_model".format(
+    --badread-error-model  {AsaruSimPath}/badread/new_error_model \
+    --badread-qscore-model {AsaruSimPath}/badread/new_qscore_model".format(
         perfect_reads=perfect_reads,
         tmp_fastq=tmp_fastq,
         mean=round(params[0],2),
         var=round(params[1],2),
         max=round(params[2],2),
-        SLSimPath=SLSimPath
+        AsaruSimPath=AsaruSimPath
     )
-    stdout, stderr = run_subprocess(SLSim_cmd)
+    stdout, stderr = run_subprocess(AsaruSim_cmd)
     
     seqtk_cmd = "seqtk seq -a {tmp_fq} > {tmp_fa}".format(
         tmp_fq=tmp_fastq,
@@ -88,11 +88,11 @@ def call_SLSim(SLSimPath, perfect_reads, tmp_fastq, params, adapters_fasta="adap
 
 
 def simulation_function(params): 
-    SLSimPath = "/export/home1/ScNaUmi-seq_B2022/SLSim/"
-    perfect = SLSimPath+"tomato_simulated_data/fasta/sub_template_1k.fasta"
-    tmp_fastq = SLSimPath+"tomato_simulated_data/error_profiling/fastq/sub_sim_fited_1k.fastq"
-    adapter = SLSimPath+"tomato_simulated_data/error_profiling/fasta/adapter.fasta"
-    tmp_fasta = call_SLSim(SLSimPath, perfect, tmp_fastq, params, adapters_fasta=adapter,  min_adapter_id=0.7)
+    AsarusimPath = "/export/home1/Asarusim/"
+    perfect = AsarusimPath+"simulated_data/fasta/sub_template_1k.fasta"
+    tmp_fastq = AsarusimPath+"simulated_data/error_profiling/fastq/sub_sim_fited_1k.fastq"
+    adapter = AsarusimPath+"simulated_data/error_profiling/fasta/adapter.fasta"
+    tmp_fasta = call_AsaruSim(AsaruSimPath, perfect, tmp_fastq, params, adapters_fasta=adapter,  min_adapter_id=0.7)
     _, ed_sim = vsearsh_align(tmp_fasta, adapter)
     #print(tmp_fasta)
     dict_sim = dict(Counter(ed_sim))
@@ -127,7 +127,7 @@ def main():
     
     # Start writing to the file
     with open(file_path, 'w') as file:
-        cc = 0
+        counter = 0
         ed_real = np.array([568, 92, 72, 48, 75, 43, 13])
         for i, mean in enumerate(par):
             for max in par[i+1:]:
@@ -137,8 +137,8 @@ def main():
                         val_mse = mse_calculator(ed_real, ed_sim)
                         line = f"{mean},{st},{max},{rep},{round(val_mse, 2)}\n"
                         file.write(line)
-                        cc += 1
-                        print(cc)
+                        counter += 1
+                        #print(counter)
                         print(round(val_mse, 2))
 
 if __name__ == '__main__':
