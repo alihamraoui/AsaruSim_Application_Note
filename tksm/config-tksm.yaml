@@ -1,0 +1,86 @@
+outpath: output
+enable_piping: false
+benchmark_time: false
+# Pipeline modules
+
+# >---- Entry point modules. Produce MDF as output. 
+# Mrg :
+## Merge the output of multiple pipelines into a single MDF and use it as input.
+## Takes sources key-value pair whose value is a list of pipeline names to merge.
+## The multiple pipelines can have different models and different references.
+## Must include params key-value as a list (not string) of pipeline names to merge.
+# Tsb : 
+## Splices the genome. Generates transcripts based on the model expression.
+## Tsb module allows for params key-value pair with the value being a string.
+## Must include mode (either Xpr or Xpr_sc) and model (sample name) key-value pairs.
+
+# >----> Core modules with MDF as input and MDF as output.
+## All these modules take params key-value pair with string values
+# Flt : Filters molecules out molecules that fail the given conditions
+# PCR : PCR amplification
+# plA : polyA tailing
+# SCB : Single-cell barcoding of molecules (from tags added by Tsb module with Xpr_sc mode)
+# Tag : Tag the molecules with on 5' or 3' end with specified FASTA pattern
+# Flp : Flib the molecule strands with a given probability
+# Trc : Truncate the molecules. Takes model (sample name) key-value pair
+
+# ----> Terminal sequencing module with FASTQ/A as output.
+# Seq : 
+## Sequence the molecules. Can only be last module in its pipeline. 
+## Takes model (sample name or TKSM error/qscore model name (try: tksm sequence -h)) key-value pair.
+TS_experiments:
+    PBMC_single_cell_5M_2:
+        pipeline:
+            - Tsb:
+                params: "--molecule-count 2000000"
+                model: PBMC_lr-br
+            - Trc:
+                params: ""
+                model: "Human_PBMC"
+            - plA:
+                params: "--normal=15,7.5"
+            - Tag:
+                params: "--format5 12"
+            - SCB:
+                params: ""
+            - PCR:
+                params: "--cycles 5 -x T4 --molecule-count 5000000"
+            - Flp:
+                params: "-p 0.5"
+            - Tag:
+                params: "--format3 ACTAAAGGCCATTACGGCCTACACGACGCTCTTCCGATCT --format5 TGTACTCTGCGTTGATACCACTGCTT"
+            - Seq:
+                params: "--perfect output/TS/PBMC_single_cell_5M_2/perfect.fasta"
+                model: "Human_PBMC"
+
+exec:
+    tksm: build/bin/tksm
+
+refs:
+    Homo_sapiens:
+        cDNA: /export/home1/ScNaUmi-seq_B2022/SLSim/data/cdna/Homo_sapiens.GRCh38.cdna.all.fa
+        DNA: /export/home1/ScNaUmi-seq_B2022/references/refdata-gex-GRCh38-2020-A/fasta/genome.fa
+        GTF: /export/home1/ScNaUmi-seq_B2022/references/refdata-gex-GRCh38-2020-A/genes/genes.gtf
+
+    barcodes:
+        10x: data/refs/3M-february-2018.txt.gz
+    10x: data/refs/3M-february-2018.txt.gz
+
+samples:
+    "Human_PBMC.badread":
+        fastq:
+            - /export/home1/ScNaUmi-seq_B2022/wf-SLSim/paper/SC3pv3_GEX_Human_PBMC_ONT_1M.fastq
+        ref: Homo_sapiens
+        cb_wl: 10x
+    "Human_PBMC":
+        fastq:
+            - /export/home1/ScNaUmi-seq_B2022/wf-single-cell/data/SC3pv3_GEX_Human_PBMC_ONT_5M.fastq
+        ref: Homo_sapiens
+        cb_wl: 10x
+
+models:
+    Tsb:
+        PBMC_lr-br:
+            sample: Human_PBMC
+            lr-bc: Human_PBMC
+            params: ""

@@ -1,0 +1,60 @@
+hamraoui@gna:/export/home1/ScNaUmi-seq_B2022/tmp/test/AsaruSim$ bash run_PBMC_5M.sh
+Nextflow 24.10.3 is available - Please consider updating your version to it
+
+ N E X T F L O W   ~  version 24.04.4
+
+Launching `main.nf` [special_goldwasser] DSL2 - revision: bdaf137c02
+
+WARN: Access to undefined parameter `novel_transcripts` -- Initialise it to a default value eg. `params.novel_transcripts = some_value`
+WARN: Access to undefined parameter `ref_genome` -- Initialise it to a default value eg. `params.ref_genome = some_value`
+ASARU - SINGLE CELL NANOPORE READS SIMULATOR P I P E L I N E
+===================================
+matrix                        : /export/home1/ScNaUmi-seq_B2022/wf-single-cell/SC3pv3_GEX_Human_PBMC_ONT_5M/SC3pv3_GEX_Human_PBMC_ONT_5M/transcript_raw_feature_bc_matrix/matrix.csv
+transcriptome                 : /export/home1/ScNaUmi-seq_B2022/SLSim/data/cdna/Homo_sapiens.GRCh38.cdna.all.fa
+matrix rownames               : transcript_id
+barcodes counts distribution  : null
+full length transcripts       : false
+novel transcripts             : null
+simulate cell types           : false
+cell type annotation          : null
+GTF                           : /export/home1/ScNaUmi-seq_B2022/references/refdata-gex-GRCh38-2020-A/genes/genes.gtf
+pre-trained error model       : null
+identity model                : 97.0,4.0,100
+error model                   : null
+Qscore model                  : null
+build new mode                : true
+FASTQ model                   : /export/home1/ScNaUmi-seq_B2022/wf-SLSim/paper/SC3pv3_GEX_Human_PBMC_ONT_1M.fastq
+Truncation model              : null
+reference genome              : null
+UMI duplication               : 1
+PCR amplification cycles      : 5
+PCR duplication rate          : 0.7
+PCR error rate                : 1E-7
+Total number of PCR reads     : 5000000
+outdir                        : output/PBMC_5k_5M
+
+executor >  local (11)
+[de/509045] process > SUBSAMPLE (1)              [100%] 1 of 1 ✔
+[7a/805464] process > ALIGNMENT (1)              [100%] 1 of 1 ✔
+[92/9971e6] process > ERROR_MODLING (1)          [100%] 1 of 1 ✔
+[47/80a3b5] process > IDENTITY_ESTIMATION (1)    [100%] 1 of 1 ✔
+[1d/fd87f1] process > TRUNCATION_ESTIMATION (1)  [100%] 1 of 1 ✔
+executor >  local (11)
+executor >  local (11)
+executor >  local (11)
+[de/509045] process > SUBSAMPLE (1)              [100%] 1 of 1 ✔
+[7a/805464] process > ALIGNMENT (1)              [100%] 1 of 1 ✔
+[92/9971e6] process > ERROR_MODLING (1)          [100%] 1 of 1 ✔
+[47/80a3b5] process > IDENTITY_ESTIMATION (1)    [100%] 1 of 1 ✔
+[1d/fd87f1] process > TRUNCATION_ESTIMATION (1)  [100%] 1 of 1 ✔                                                                                                                                                  [ba/4a5e73] process > TEMPLATE_MAKER (1)         [100%] 1 of 1 ✔
+[36/13c4df] process > PCR_SIMULATOR (1)          [100%] 1 of 1 ✔
+[d7/fb5f0d] process > GROUND_TRUTH (1)           [100%] 1 of 1 ✔
+[e2/d16681] process > BATCH_SIZE_FOR_BADREAD (1) [100%] 1 of 1 ✔
+[5c/91c3f9] process > ERRORS_SIMULATOR (1)       [100%] 1 of 1 ✔                                                                                                                                                  [8b/612638] process > QC (1)                     [100%] 1 of 1 ✔
+
+Done! Open the following report in your browser --> output/PBMC_5k_5M/PBMC_5k_5M.html
+                                                                                                                                                                                                                  WARN: Cannot serialize context map. Cause: java.lang.IllegalArgumentException: Unable to create serializer "com.esotericsoftware.kryo.serializers.FieldSerializer" for class: jdk.internal.reflect.DelegatingMethodAccessorImpl -- Resume will not work on this process
+Completed at: 18-Dec-2024 13:10:11
+Duration    : 44m 45s
+CPU hours   : 0.8
+Succeeded   : 11
