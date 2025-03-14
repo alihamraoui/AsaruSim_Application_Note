@@ -1,7 +1,7 @@
 # AsaruSim paper scripts
 The current repository contains all the scripts needed to reproduce the results published in the paper:
 > Ali Hamraoui, Laurent Jourdren and Morgane Thomas-Chollier. AsaruSim: a single-cell and spatial RNA-Seq Nanopore long-reads simulation workflow.
-> bioRxiv 2024.09.20.613625; doi: [https://doi.org/10.1101/2024.09.20.613625](https://doi.org/10.1101/2024.09.20.613625)
+> bioRxiv 2024.09.20.613625; doi: [https://doi.org/10.1093/bioinformatics/btaf087](https://pmc.ncbi.nlm.nih.gov/articles/PMC11897429/)
 
 This repository is organized into three main directories, each pertaining to a different aspect of simulation and analysis:
 
